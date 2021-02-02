@@ -21,18 +21,17 @@ const server = http.createServer((req, res) => {
         console.log('got here');
 
         const body = [];
-        res.on('data', (chunk) => {
+        req.on('data', (chunk) => {
             console.log(chunk);
             body.push(chunk);
         })
 
-        res.on('end', () => {
+        let message = '';
+
+        req.on('end', () => {
             const parsedBody = Buffer.concat(body).toString();
-            const message = parsedBody.split('=')[1];
-
-            console.log(parsedBody);
-
-            fs.writeFileSync('message.txt', 'new message');
+            message = parsedBody.split('=')[1];
+            fs.writeFileSync('message.txt', message);
         })
 
         // res.writeHead(302, '', { 'Location': '/' });
