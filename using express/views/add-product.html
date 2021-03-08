@@ -4,22 +4,110 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Product</title>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        }
+
+        .main-header {
+            height: 56px;
+            background-color: #d1ad37;
+            margin-bottom: 20px;
+        }
+
+        .main-header__nav {
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .main-header__item-list {
+            margin: 0 1.5rem;
+            padding: 0;
+            display: flex;
+            list-style: none;
+        }
+
+        .main-header__item {
+            margin: 0 1rem;
+        }
+
+        .main-header__item a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .main-header__item a:hover, .main-header__item a:active, .main-header__item a.active {
+            cursor: pointer;
+            color: rgb(37, 74, 175);
+        }
+
+        .product-form {
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        .form-control label {
+            color: black;
+            font-size: .8rem;
+            display: block;
+            font-weight: bold;
+            margin: .5rem 0;
+        }
+
+        .form-control input {
+            display: block;
+            width: 100%;
+            margin: 1rem 0;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            border: 1px solid #d1ad37;
+            border-radius: 4px;
+            padding-left: 15px;
+            height: 30px;
+        }
+
+        .form-control input:focus {
+            outline: none;
+        }
+
+        button {
+            padding: 5px 25px;
+            color: rgb(37, 74, 175);
+            background: white;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            border-radius: 4px;
+            border: 1px solid rgb(37, 74, 175);
+            transition: background-color .4s;
+        }
+
+        button:hover {
+            color: white;
+            background: rgb(37, 74, 175);
+            cursor: pointer;
+        }
+
+    </style>
 </head>
 <body>
     
-    <header>
-        <nav>
-            <ul>
-                <li><a href="/">Shop</a></li>
-                <li><a href="/admin/add-product">Add Product</a></li>
+    <header class="main-header">
+        <nav class="main-header__nav">
+            <ul class="main-header__item-list">
+                <li class="main-header__item"><a href="/">Shop</a></li>
+                <li class="main-header__item"><a class="active" href="/admin/add-product">Add Product</a></li>
             </ul>
         </nav>
     </header>
 
-    <main>
-        <form action="/add-product" method="POST">
-            <input type="text" name="title">
-            <button type="submit" >Submit</button>
+    <main class="product-form-container">
+        <form class="product-form" action="/admin/add-product" method="POST">
+            <div class="form-control">
+                <label for="title">Title</label>
+                <input type="text" name="title" placeholder="Title" id="title">
+            </div>
+            <button type="submit" >Add Product</button>
         </form>
     </main>
 
