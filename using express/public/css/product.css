@@ -1,0 +1,28 @@
+.product-form {
+    width: 90%;
+    margin: 0 auto;
+}
+
+.form-control label {
+    color: black;
+    width: 100%;
+    font-size: .8rem;
+    display: block;
+    font-weight: bold;
+    margin: .5rem 0;
+}
+
+.form-control input {
+    display: block;
+    width: 100%;
+    margin: 1rem 0;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    border: 1px solid #d1ad37;
+    border-radius: 4px;
+    padding-left: 15px;
+    height: 30px;
+}
+
+.form-control input:focus {
+    outline: none;
+}
