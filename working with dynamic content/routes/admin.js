@@ -1,22 +1,27 @@
 const express = require('express')
-const bodyParser = require('body-parser')
 const path = require('path')
 
 const root = require('../utils/path')
 
 const router = express.Router()
 
-router.use(bodyParser.urlencoded({ extended: false }))
+// data
+const products = [];
 
 // GET add-product
 router.get('/add-product', (req, res, next) => {
-    res.sendFile(path.join(root, 'views', 'add-product.html'))
+    res.render('add-product')
 })
 
 // POST add-product
 router.post('/add-product', (req, res, next) => {
-    console.log(req.body)
+    products.push({
+        title: req.body.title
+    })
     res.redirect('/')
 })
 
-module.exports = router;
+module.exports = {
+    routes: router,
+    products: products
+}
