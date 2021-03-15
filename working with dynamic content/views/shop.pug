@@ -1,23 +1,16 @@
-<!DOCTYPE html>
-html(lang="en")
-    head
-        meta(charset="UTF-8")
-        meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        link(rel="stylesheet", href="/css/main.css")
-        title My Shop
-    body
-        header.main-header
-            nav.main-header__nav
-                ul.main-header__item-list
-                    li.main-header__item
-                        a.main-header__item-link.active(href="/") My Shop
-                    li.main-header__item
-                        a.main-header__item-link(href="/admin/add-product") Add Product
-        
-        main.main-container
-            h1 My Products
-            ul
-                li Product 1
-                li Product 2
-                li Product 3
-                li Product 4
+
+extends layouts/main-layout.pug
+
+block content
+    main.main-container
+        h1 My Products
+        if prods.length > 0
+            .grid
+                each product in prods
+                    .card
+                        span.card__title #{ product.title }
+                        img.card__image(src="https://images.unsplash.com/photo-1598128558393-70ff21433be0?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=422&q=80", alt="An Item")
+                        span.card__price $1900
+                        p.card__description Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nostrum, quaerat!
+        else 
+            h4 No products available at this time.

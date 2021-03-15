@@ -10,7 +10,11 @@ const products = [];
 
 // GET add-product
 router.get('/add-product', (req, res, next) => {
-    res.render('add-product')
+    const payload = {
+        path: '/admin/add-product',
+        pageTitle: 'Add Product'
+    }
+    res.render('add-product', payload)
 })
 
 // POST add-product

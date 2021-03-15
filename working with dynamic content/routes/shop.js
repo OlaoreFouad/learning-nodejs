@@ -9,8 +9,12 @@ const admin = require('./admin')
 const router = express.Router()
 
 router.get('/', (req, res, next) => {
-    console.log(admin.products)
-    res.render('shop')
+    const payload = {
+        prods: admin.products,
+        pageTitle: 'Shop',
+        path: '/'
+    }
+    res.render('shop', payload)
 })
 
 module.exports = router;
