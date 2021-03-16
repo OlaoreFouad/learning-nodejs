@@ -1,0 +1,17 @@
+extends layouts/main-layout.pug
+
+block styles
+    link(rel="stylesheet", href="/css/view-profile.css")
+
+block content
+    main.main-container
+        h4 This is where all users would be enlisted
+        if profiles.length > 0
+            .grid
+                each profile in profiles
+                    .profile-item
+                        span.name #{ profile.name }
+                        span.job #{ profile.job }
+                        p.description #{ profile.about }
+        else
+            span No users available for display at the moment

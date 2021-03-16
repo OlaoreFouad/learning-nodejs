@@ -1,0 +1,36 @@
+.grid {
+    display: flex;
+}
+
+.profile-item {
+    padding: 20px;
+    width: 200px;
+    box-shadow: .2rem .2rem .4rem #ccc;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+.profile-item * { display: block; }
+
+.profile-item .name {
+    color: #0d7909;
+    padding: 10px 0;
+    background-color: white;
+    font-weight: bold;
+    font-size: 1rem;
+    text-align: center;
+}
+
+.profile-item .job {
+    color: black;
+    text-align: center;
+    font-style: italic;
+    margin-bottom: 10px;
+}
+
+.profile-item .description {
+    width: 90%;
+    margin: 0 auto;
+    color: black;
+    text-align: center;
+}

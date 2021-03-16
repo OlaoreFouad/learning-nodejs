@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Profile</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/add-profile.css">
+</head>
+<body>
+
+    <header class="main-header">
+        <nav class="main-header__nav">
+            <ul class="main-header__item-list">
+                <li class="main-header__item">
+                    <a href="/" class="main-header__item-link">Home</a>
+                </li>
+                <li class="main-header__item">
+                    <a href="/view-profile" class="main-header__item-link">View Profiles</a>
+                </li>
+                <li class="main-header__item">
+                    <a href="/add-profile" class="main-header__item-link active">Add Profile</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-container">
+        <form action="/add-profile" method="POST" class="profile-form">
+            <div class="form-control">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name">
+            </div>
+            <div class="form-control">
+                <label for="job">Job Role</label>
+                <input type="text" id="job" name="job">
+            </div>
+            <div class="form-control">
+                <label for="about">About</label>
+                <textarea name="about" id="about" cols="30" rows="10"></textarea>
+            </div>
+
+            <button>Add User</button>
+        </form>
+    </main>
+</body>
+</html>

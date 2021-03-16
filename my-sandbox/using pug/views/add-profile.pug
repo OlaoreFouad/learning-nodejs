@@ -1,0 +1,18 @@
+extends layouts/main-layout.pug
+
+block styles
+    link(rel="stylesheet", href="/css/add-profile.css")
+
+block content
+    main.main-container
+        form.profile-form(action="/add-profile", method="POST")
+            .form-control
+                label(for="name") Name
+                input(type="text", id="name", name="name")
+            .form-control
+                label(for="job") Job Role
+                input(type="text", id="job", name="job")
+            .form-control
+                label(for="about") About
+                textarea(cols="30", rows="10", id="about", name="about", style="resize: none")
+            button Add User

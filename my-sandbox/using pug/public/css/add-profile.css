@@ -1,0 +1,44 @@
+form.profile-form {
+    width: 300px;
+    margin: 0 auto;
+}
+
+.form-control {
+    margin-bottom: 10px;
+}
+
+.form-control label, .form-control input {
+    display: block;
+}
+
+.form-control input:focus, button:focus, textarea:focus {
+    outline: none;
+}
+
+.form-control label {
+    font-weight: bold;
+    font-size: .9rem;
+    color: black;
+    margin-bottom: 5px;
+}
+
+.form-control input, textarea {
+    border: 1px solid #bb330a;
+    padding: 5px;
+    border-radius: 4px;
+    width: 100%;
+}
+
+form.profile-form button {
+    padding: 5px 15px;
+    color: white;
+    background-color: #0d7909;
+    border: none;
+    border-radius: 4px;
+    float: right;
+    outline: none;
+}
+
+form.profile-form button:hover {
+    cursor: pointer;
+}
