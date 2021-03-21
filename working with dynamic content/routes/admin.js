@@ -12,7 +12,9 @@ const products = [];
 router.get('/add-product', (req, res, next) => {
     const payload = {
         path: '/admin/add-product',
-        pageTitle: 'Add Product'
+        pageTitle: 'Add Product',
+        activeAddProduct: true,
+        productCss: true
     }
     res.render('add-product', payload)
 })

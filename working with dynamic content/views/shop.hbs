@@ -1,0 +1,19 @@
+<main class="main-container">
+        <h1>My Products</h1>
+        {{#if prods}}
+        <div class="grid">
+            {{#each prods}}
+            <div class="card">
+                <span class="card__title">
+                    {{ this.title }}
+                </span>
+                <img src="https://images.unsplash.com/photo-1598128558393-70ff21433be0?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=422&q=80" alt="An Item" class="card__image">
+                <span class="card__price">$1900</span>
+                <p class="card__description">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sunt, quam!</p>
+            </div>
+            {{/each}}
+        </div>
+        {{else}}
+        <h4>No products available at this time.</h4>
+        {{/if}}
+    </main>

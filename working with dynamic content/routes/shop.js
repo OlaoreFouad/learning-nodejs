@@ -12,7 +12,8 @@ router.get('/', (req, res, next) => {
     const payload = {
         prods: admin.products,
         pageTitle: 'Shop',
-        path: '/'
+        path: '/',
+        activeShop: true
     }
     res.render('shop', payload)
 })
