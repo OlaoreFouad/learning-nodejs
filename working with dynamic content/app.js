@@ -1,15 +1,13 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path')
-const hbs = require('express-handlebars')
 
 const root = require('./utils/path')
 
 const app = express()
 
 // configure view engine
-app.engine('hbs', hbs({ defaultLayout: 'main-layout.hbs', extname: '.hbs', layoutsDir: 'views/layouts' }))
-app.set('view engine', 'hbs')
+app.set('view engine', 'ejs')
 app.set('views', 'views')
 
 app.use(express.static(path.join(root, 'public')))
@@ -25,7 +23,8 @@ app.use('/admin', admin.routes)
 app.use('/', (req, res, next) => {
     const payload = {
         pageTitle: 'Page Not Found',
-        pageNotFound: true
+        pageNotFound: true,
+        path: null
     }
     res.status(404).render('404', payload)
 })
