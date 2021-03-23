@@ -1,0 +1,20 @@
+<%- include('includes/head.ejs') %>
+</head>
+<body>
+    
+    <%- include('includes/navigation.ejs') %> 
+
+    <main class="main-container">
+        <h2>Added Users</h2>
+        <% if (names.length > 0) { %> 
+            <ul>
+                <% for (const name of names) { %> 
+                <li><%= name %> </li>
+                <% } %> 
+            </ul>
+        <% } else { %> 
+            <em>No users added yet</em>
+        <% } %> 
+    </main>
+
+<%- include('includes/end.ejs') %> 
