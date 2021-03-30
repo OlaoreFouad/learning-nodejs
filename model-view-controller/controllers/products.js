@@ -11,7 +11,13 @@ exports.getAddProduct = (req, res, next) => {
 }
 
 exports.postAddProduct = (req, res, next) => {
-    const product = new Product(req.body.title)
+
+    const title = req.body.title;
+    const description = req.body.description;
+    const price = req.body.price;
+    const imageUrl = req.body.imageUrl;
+
+    const product = new Product(title, description, price, imageUrl)
     product.save()
     res.redirect('/')
 }
@@ -22,28 +28,4 @@ exports.getAdminProducts = (req, res, next) => {
         pageTitle: 'Admin Products'
     }
     res.render('admin/view-products', payload)
-}
-
-exports.getShop = (req, res, next) => {
-    Product.fetchAll((products) => {
-        let payload = {
-            pageTitle: 'Shop',
-            path: '/',
-            prods: products,
-            activeShop: true
-        }
-        res.render('shop/index', payload)
-    })
-}
-
-exports.getProducts = (req, res, next) => {
-    Product.fetchAll((products) => {
-        let payload = {
-            pageTitle: 'All Products',
-            path: '/products',
-            prods: products,
-            activeShop: true
-        }
-        res.render('shop/product-list', payload)
-    })
 }
