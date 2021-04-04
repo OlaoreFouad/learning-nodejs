@@ -23,9 +23,12 @@ exports.postAddProduct = (req, res, next) => {
 }
 
 exports.getAdminProducts = (req, res, next) => {
-    const payload = {
-        path: '/admin/products',
-        pageTitle: 'Admin Products'
-    }
-    res.render('admin/view-products', payload)
+    Product.fetchAll((products) => {
+        const payload = {
+            path: '/admin/products',
+            pageTitle: 'Admin Products',
+            prods: products
+        }
+        res.render('admin/view-products', payload)
+    })
 }

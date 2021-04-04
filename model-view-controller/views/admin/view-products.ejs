@@ -1,10 +1,37 @@
 <%- include('../includes/head.ejs') %> 
+<link rel="stylesheet" href="/css/product.css">
 <body>
 
     <%- include('../includes/navigation.ejs') %> 
 
     <main class="main-container">
         <h3>Admin Products</h3>
+
+        <% if (prods.length > 0) { %>
+            <div class="grid">
+                <% for (const product of prods) { %>
+                    <div class="card">
+                        <span class="card__title"><%= product.title %></span>
+                        <img src="<%= product.imageUrl %>" alt="<%= product.title %>" class="card__image">
+                        <span class="card__price">$<%= product.price %> </span>
+                        <p class="card__description">
+                            <%= product.description %> 
+                        </p>
+                        <div class="buttons">
+                            <a class="btn" href="/admin/edit-product">Edit</a>
+                            <form action="/admin/delete-product" method="POST">
+                                <button class="btn" type="submit">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+            <% } else { %>
+    
+                <h4>No products available at this time</h4>
+    
+            <% } %>
+
     </main>
     
 <%- include('../includes/end.ejs') %> 

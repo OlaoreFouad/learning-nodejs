@@ -16,6 +16,11 @@
                     <p class="card__description">
                         <%= product.description ? product.description : 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia temporibus pariatur magnam repellendus, quasi voluptatem!' %> 
                     </p>
+                    <div class="buttons">
+                        <form action="/add-to-cart" method="POST">
+                            <button class="btn" type="submit">Add to Cart</button>
+                        </form>
+                    </div>
                 </div>
             <% } %>
         </div>

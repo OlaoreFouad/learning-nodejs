@@ -26,7 +26,15 @@ exports.getProducts = (req, res, next) => {
 exports.getCart = (req, res, next) => {
     const payload = {
         path: '/cart',
-        pageTitle: 'your Cart',
+        pageTitle: 'Your Cart',
     }
     res.render('shop/cart', payload)
+}
+
+exports.getOrders = (req, res, next) => {
+    const payload = {
+        path: '/orders',
+        pageTitle: 'Your orders',
+    }
+    res.render('shop/orders', payload)
 }
