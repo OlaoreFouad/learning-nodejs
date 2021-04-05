@@ -16,6 +16,10 @@
                     <p class="card__description">
                         <%= product.description %> 
                     </p>
+                    <div class="buttons">
+                        <a href="/products/<%= product.id %> " class="btn">Open</a>
+                        <%- include('../includes/add-to-cart.ejs', { product: product }) %> 
+                    </div>
                 </div>
             <% } %>
         </div>
