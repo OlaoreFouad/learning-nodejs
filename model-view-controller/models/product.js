@@ -24,7 +24,8 @@ const saveProductToFile = (products) => {
 
 module.exports = class Product {
 
-    constructor(title, description, price, imageUrl) {
+    constructor(id, title, description, price, imageUrl) {
+        this.id = id;
         this.title = title;
         this.description = description;
         this.price = price;
@@ -32,11 +33,29 @@ module.exports = class Product {
     }
 
     save() {
-        this.id = Math.random().toString() + (101 / Math.random()).toString()
         getProductsFromFile((products) => {
-            products.push(this)
+
+            if (this.id) {
+                const existingProductIndex = products.findIndex(product => product.id === this.id);
+                products[existingProductIndex] = this
+            } else {
+                this.id = Math.random().toString() + (101 / Math.random()).toString()
+                products.push(this)
+            }
+
             saveProductToFile(products)
         })
+    }
+
+    static delete(productId, cb) {
+
+        getProductsFromFile((products) => {
+            const productIndex = products.findIndex(product => product.id === productId)
+            products.splice(productIndex, 1)
+            saveProductToFile(products)
+            cb()
+        })
+
     }
 
     static fetchAll(cb) {
