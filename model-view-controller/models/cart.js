@@ -34,9 +34,9 @@ module.exports = class Cart {
             if (existingProduct) {
                 updatedProduct = { ...existingProduct }
                 updatedProduct.qty += 1;
-                cart.product[existingProductIndex] = updatedProduct;
+                cart.products[existingProductIndex] = updatedProduct;
             } else {
-                updatedProduct = { id: id, qty: 1, price: price }
+                updatedProduct = { id, qty: 1, price }
                 cart.products = [ ...cart.products, updatedProduct ]
             }
 
@@ -45,10 +45,42 @@ module.exports = class Cart {
             writeCartToFile(cart)
 
         })
-        // check the cart if the element exists
-        // add the new element to the cart or increase the qty of the element in the cart array
-        // effect the price
 
+    }
+
+    static deleteProduct(id, price, cb) {
+        // read the content of the cart
+        fs.readFile(p, (err, data) => {
+            if (err) {
+                return
+            }
+            // find the product by id
+            const currentCart = { ...JSON.parse(data) }
+            const product = currentCart.products.find(prod => prod.id == id)
+            if (!product) {
+                return;
+            }
+            const productQty = product.qty
+            // remove the product from the products array
+            const updatedProducts = currentCart.products.filter(prod => prod.id !== product.id)
+            currentCart.products = updatedProducts
+            // reduce the total price
+            currentCart.totalPrice -= price * productQty
+            // re-write into the file
+            writeCartToFile(currentCart)
+            cb()
+        })
+    }
+
+    static getCart(cb) {
+        fs.readFile(p, (err, data) => {
+            if (err) {
+                cb(null)
+            } else {
+                const cart = JSON.parse(data)
+                cb(cart)
+            }
+        })
     }
 
 }

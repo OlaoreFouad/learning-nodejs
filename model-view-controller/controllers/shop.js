@@ -46,11 +46,35 @@ exports.postCart = (req, res, next) => {
 }
 
 exports.getCart = (req, res, next) => {
-    const payload = {
-        path: '/cart',
-        pageTitle: 'Your Cart',
-    }
-    res.render('shop/cart', payload)
+    Cart.getCart(cart => {
+        Product.fetchAll(products => {
+            const cartProducts = []
+            for (const product of cart.products) {
+                const productInProducts = products.find(prod => prod.id == product.id)
+                const p = {
+                    data: productInProducts,
+                    qty: product.qty
+                }
+                cartProducts.push(p)
+            }
+            const payload = {
+                path: '/cart',
+                pageTitle: 'Your Cart',
+                products: cartProducts,
+                totalPrice: cart.totalPrice
+            }
+            res.render('shop/cart', payload)
+        })
+    })
+}
+
+exports.deleteProductFromCart = (req, res, next) => {
+    const productId = req.params.productId;
+    Product.findById(productId, (product) => {
+        Cart.deleteProduct(productId, product.price, () => {
+            res.redirect('/cart')
+        })
+    })
 }
 
 exports.getOrders = (req, res, next) => {

@@ -20,6 +20,9 @@ router.get('/cart', shopController.getCart)
 // POST /cart
 router.post('/cart', shopController.postCart)
 
+// POST /cart/delete/:productId
+router.post('/cart/delete/:productId', shopController.deleteProductFromCart)
+
 // GET /orders
 router.get('/orders', shopController.getOrders)
 

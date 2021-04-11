@@ -2,6 +2,8 @@ const fs = require('fs')
 const path = require('path')
 const root = require('../utils/path')
 
+const Cart = require('../models/cart')
+
 const p = path.join(
     root, 'data', 'products.json'
 )
@@ -51,9 +53,10 @@ module.exports = class Product {
 
         getProductsFromFile((products) => {
             const productIndex = products.findIndex(product => product.id === productId)
+            const product = products[productIndex]
             products.splice(productIndex, 1)
             saveProductToFile(products)
-            cb()
+            Cart.deleteProduct(productId, product.price, cb)
         })
 
     }
