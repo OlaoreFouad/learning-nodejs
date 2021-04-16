@@ -3,25 +3,29 @@ const Product = require('../models/product')
 const Cart = require('../models/cart')
 
 exports.getShop = (req, res, next) => {
-    Product.fetchAll((products) => {
-        let payload = {
-            pageTitle: 'Shop',
-            path: '/',
-            prods: products
-        }
-        res.render('shop/index', payload)
-    })
+    Product.fetchAll()
+        .then(([rows, fieldData]) => {
+            let payload = {
+                pageTitle: 'All Products',
+                path: '/products',
+                prods: rows
+            }
+            res.render('shop/product-list', payload)
+        })
+        .catch(err => console.error(error))
 }
 
 exports.getProducts = (req, res, next) => {
-    Product.fetchAll((products) => {
-        let payload = {
-            pageTitle: 'All Products',
-            path: '/products',
-            prods: products
-        }
-        res.render('shop/product-list', payload)
-    })
+    Product.fetchAll()
+        .then(([rows, fieldData]) => {
+            let payload = {
+                pageTitle: 'All Products',
+                path: '/products',
+                prods: rows
+            }
+            res.render('shop/product-list', payload)
+        })
+        .catch(err => console.error(error))
 }
 
 exports.getProduct = (req, res, next) => {

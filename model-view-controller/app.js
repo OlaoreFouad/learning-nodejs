@@ -3,6 +3,7 @@ const bodyParser = require('body-parser')
 const path = require('path')
 
 const root = require('./utils/path')
+const db = require('./utils/database')
 
 // controllers
 const utilControllers = require('./controllers/utils')
