@@ -7,10 +7,10 @@ exports.getShop = (req, res, next) => {
         .then(([rows, fieldData]) => {
             let payload = {
                 pageTitle: 'All Products',
-                path: '/products',
+                path: '/',
                 prods: rows
             }
-            res.render('shop/product-list', payload)
+            res.render('shop/index', payload)
         })
         .catch(err => console.error(error))
 }
@@ -30,14 +30,16 @@ exports.getProducts = (req, res, next) => {
 
 exports.getProduct = (req, res, next) => {
     const productId = req.params.productId;
-    Product.findById(productId, product => {
-        const payload = {
-            pageTitle: product.title,
-            path: '/products',
-            product: product
-        }
-        res.render('shop/product-details', payload)
-    })
+    Product.findById(productId)
+        .then(([product]) => {
+            const payload = {
+                pageTitle: product[0].title,
+                path: '/products',
+                product: product[0]
+            }
+            res.render('shop/product-details', payload)
+        })
+        .catch(err => console.error(error))
 }
 
 exports.postCart = (req, res, next) => {

@@ -20,7 +20,10 @@ exports.postAddProduct = (req, res, next) => {
 
     const product = new Product(null, title, description, price, imageUrl)
     product.save()
-    res.redirect('/')
+        .then(() => {
+            res.redirect('/')
+        })
+        .catch(err => console.error(err))
 }
 
 exports.getEditProduct = (req, res, next) => {
