@@ -13,6 +13,10 @@ const sequelize = require("./utils/database");
 const adminRoutes = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
 
+// models
+const Product = require("./models/product");
+const User = require("./models/user");
+
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -26,8 +30,14 @@ app.use(shopRoutes);
 
 app.use("/", utilControllers.getPageNotFound);
 
+Product.belongsTo(User, {
+  constraints: true,
+  onDelete: "CASCADE",
+});
+User.hasMany(Product);
+
 sequelize
-  .sync()
+  .sync({ force: true })
   .then((result) => console.log(result))
   .catch((err) => console.error(err));
 
