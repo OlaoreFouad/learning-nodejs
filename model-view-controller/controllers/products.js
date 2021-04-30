@@ -17,17 +17,21 @@ exports.postAddProduct = (req, res, next) => {
   const price = req.body.price;
   const imageUrl = req.body.imageUrl;
 
-  Product.create({
-    title,
-    description,
-    price,
-    imageUrl,
-  })
-    .then((result) => {
-      console.log('product added');
-      res.redirect('/admin/products')
+  req.user
+    .createProduct({
+      title,
+      description,
+      price,
+      imageUrl,
+      userId: req.user.id,
     })
-    .catch((err) => console.error(err));
+    .then((_) => {
+      console.log("product added");
+      res.redirect("/admin/products");
+    })
+    .catch((error) => {
+      console.error(error);
+    });
 };
 
 exports.getEditProduct = (req, res, next) => {
@@ -38,8 +42,15 @@ exports.getEditProduct = (req, res, next) => {
     return res.redirect("/");
   }
 
-  Product.findByPk(productId)
-    .then((product) => {
+  req.user
+    .getProducts({
+      where: {
+        id: productId,
+      },
+    })
+    .then((products) => {
+      const product = products[0];
+
       if (!product) {
         res.redirect("/");
       }
@@ -52,7 +63,7 @@ exports.getEditProduct = (req, res, next) => {
       };
       res.render("admin/edit-product", payload);
     })
-    .catch((err) => console.error(err));
+    .catch((error) => console.error(error));
 };
 
 exports.postEditProduct = (req, res, next) => {
