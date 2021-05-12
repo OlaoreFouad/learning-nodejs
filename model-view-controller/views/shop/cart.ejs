@@ -1,4 +1,5 @@
 <%- include('../includes/head.ejs') %> 
+<link rel="stylesheet" href="/css/cart.css">
 </head>
 <body>
 
@@ -8,16 +9,20 @@
         <h3>Cart (<%= products.length %>) - $<%= totalPrice %> </h3>
 
         <% if (products.length > 0) { %> 
-            <ul>
+            <div class="cart-item-list">
                 <% products.forEach(product => { %> 
-                    <li style="margin-bottom: 5px;">
-                        <%= product.data.title %> (<%= product.qty %>)
-                        <form action="/cart/delete/<%= product.data.id %>" method="POST" style="display: inline;">
-                            <button class="btn">Delete</button>
+                    <div class="cart-item">
+                        <span class="title"><%= product.title %></span>
+                        <span class="quantity">Quantity: <%= product.qty %></span>
+                        <form action="/cart/delete/<%= product.id %>" method="POST" style="display: inline;">
+                            <button class="btn-delete">Delete</button>
                         </form>
-                    </li>
+                    </div>
                 <% }) %>
-            </ul>
+                <form action="/checkout" method="POST">
+                    <button class="btn">Checkout</button>
+                </form>
+                </div>
         <% } else { %>
             <h6>No items in cart!</h6>
         <% } %> 

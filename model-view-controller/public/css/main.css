@@ -83,6 +83,25 @@ body {
     outline: none;
   }
 
+  .btn-delete {
+    background-color: hsl(0, 0%, 100%);
+    border: 1px solid red;
+    color: red;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: .85rem;
+    padding: 5px 20px;
+    text-align: center;
+    outline: none;
+  }
+
+  .btn-delete:hover {
+    color: white;
+    background-color: red;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
   .btn:hover {
     color: white;
     background-color: #238505;

@@ -16,7 +16,10 @@ const shopRoutes = require("./routes/shop");
 // models
 const Product = require("./models/product");
 const User = require("./models/user");
-const { use } = require("./routes/admin");
+const Cart = require("./models/cart");
+const CartItem = require("./models/cart-item");
+const Order = require("./models/order");
+const OrderItem = require("./models/order-item");
 
 const app = express();
 
@@ -28,9 +31,9 @@ app.set("views", "views");
 
 app.use((req, res, next) => {
   User.findByPk(1)
-    .then(user => {
+    .then((user) => {
       req.user = user;
-      next()
+      next();
     })
     .catch((err) => console.error(err));
 });
@@ -45,6 +48,13 @@ Product.belongsTo(User, {
   onDelete: "CASCADE",
 });
 User.hasMany(Product);
+User.hasOne(Cart);
+Product.belongsToMany(Cart, { through: CartItem });
+Cart.belongsToMany(Product, { through: CartItem });
+Order.belongsTo(User);
+User.hasMany(Order);
+Order.belongsToMany(Product, { through: OrderItem });
+
 
 sequelize
   .sync()
@@ -60,7 +70,8 @@ sequelize
     }
     return user;
   })
-  .then((createdUser) => {
-    app.listen(3000);
+  .then((user) => {
+    return user.createCart();
   })
+  .then((_) => app.listen(3000))
   .catch((err) => console.error(err));
