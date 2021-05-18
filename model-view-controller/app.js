@@ -55,7 +55,6 @@ Order.belongsTo(User);
 User.hasMany(Order);
 Order.belongsToMany(Product, { through: OrderItem });
 
-
 sequelize
   .sync()
   .then(() => {
@@ -71,7 +70,12 @@ sequelize
     return user;
   })
   .then((user) => {
-    return user.createCart();
+    return user.getCart().then((cart) => {
+      if (!cart) {
+        return user.createCart();
+      }
+      return cart;
+    }).catch(err => console.error(err));
   })
   .then((_) => app.listen(3000))
   .catch((err) => console.error(err));
