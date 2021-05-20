@@ -1,26 +1,27 @@
-const express = require('express')
-const bodyParser = require('body-parser')
-const path = require('path')
-const root = require('./utils/path')
+const express = require("express");
+const bodyParser = require("body-parser");
+const path = require("path");
+const root = require("./utils/path");
 
-const utilsController = require('./controllers/utils')
+const utilsController = require("./controllers/utils");
+const connectToDatabase = require("./utils/database").connectToDatabase;
 
-const app = express()
-app.use(bodyParser.urlencoded({ extended: false }))
+const app = express();
 
-app.use(express.static(path.join(
-    root, 'public'
-)))
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static(path.join(root, "public")));
 
-app.set('view engine', 'ejs');
-app.set('views', 'views');
+app.set("view engine", "ejs");
+app.set("views", "views");
 
-const shopRoutes = require('./routes/shop')
-const adminRoutes = require('./routes/admin')
+const shopRoutes = require("./routes/shop");
+const adminRoutes = require("./routes/admin");
 
-app.use(shopRoutes)
-app.use('/admin', adminRoutes)
+app.use(shopRoutes);
+app.use("/admin", adminRoutes);
 
-app.get('/', utilsController.getPageNotFound)
+app.get("/", utilsController.getPageNotFound);
 
-app.listen(3000);
+connectToDatabase(() => {
+  app.listen(3000);
+});
