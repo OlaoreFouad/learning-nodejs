@@ -1,3 +1,5 @@
+const Product = require("../models/product");
+
 exports.getAddProduct = (req, res, next) => {
   const payload = {
     path: "/admin/add-product",
@@ -15,42 +17,50 @@ exports.postAddProduct = (req, res, next) => {
   const price = req.body.price;
   const imageUrl = req.body.imageUrl;
 
-  res.redirect("/admin/products");
+  const product = new Product(title, description, imageUrl, price);
+  product
+    .save()
+    .then(() => {
+      res.redirect("/admin/products");
+    })
+    .catch((err) => {
+      console.error(err);
+    });
 };
 
-exports.getEditProduct = (req, res, next) => {
-  const productId = req.params.productId;
-  const editMode = req.query.edit;
+// exports.getEditProduct = (req, res, next) => {
+//   const productId = req.params.productId;
+//   const editMode = req.query.edit;
 
-  if (!editMode) {
-    return res.redirect("/");
-  }
+//   if (!editMode) {
+//     return res.redirect("/");
+//   }
 
-  const payload = {
-    path: "/admin/edit-product",
-    pageTitle: "Edit Product",
-    editing: editMode,
-    product: product,
-  };
-  res.render("admin/edit-product", payload);
-};
+//   const payload = {
+//     path: "/admin/edit-product",
+//     pageTitle: "Edit Product",
+//     editing: editMode,
+//     product: product,
+//   };
+//   res.render("admin/edit-product", payload);
+// };
 
-exports.postEditProduct = (req, res, next) => {
-  const productId = req.body.productId;
+// exports.postEditProduct = (req, res, next) => {
+//   const productId = req.body.productId;
 
-  res.redirect("/admin/products");
-};
+//   res.redirect("/admin/products");
+// };
 
-exports.getAdminProducts = (req, res, next) => {
-  const payload = {
-    path: "/admin/products",
-    pageTitle: "Admin Products",
-    prods: [],
-  };
-  res.render("admin/view-products", payload);
-};
+// exports.getAdminProducts = (req, res, next) => {
+//   const payload = {
+//     path: "/admin/products",
+//     pageTitle: "Admin Products",
+//     prods: [],
+//   };
+//   res.render("admin/view-products", payload);
+// };
 
-exports.postDeleteProduct = (req, res, next) => {
-  const productId = req.body.productId;
-  res.redirect("/admin/products");
-};
+// exports.postDeleteProduct = (req, res, next) => {
+//   const productId = req.body.productId;
+//   res.redirect("/admin/products");
+// };
