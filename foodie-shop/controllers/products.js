@@ -28,22 +28,30 @@ exports.postAddProduct = (req, res, next) => {
     });
 };
 
-// exports.getEditProduct = (req, res, next) => {
-//   const productId = req.params.productId;
-//   const editMode = req.query.edit;
+exports.getEditProduct = (req, res, next) => {
+  const productId = req.params.productId;
+  const editMode = req.query.edit;
 
-//   if (!editMode) {
-//     return res.redirect("/");
-//   }
+  console.log(`Getting here: ${ productId }, ${ editMode }`);
 
-//   const payload = {
-//     path: "/admin/edit-product",
-//     pageTitle: "Edit Product",
-//     editing: editMode,
-//     product: product,
-//   };
-//   res.render("admin/edit-product", payload);
-// };
+  if (!editMode) {
+    return res.redirect("/");
+  }
+
+  Product.find(productId)
+    .then((product) => {
+      const payload = {
+        path: "/admin/edit-product",
+        pageTitle: "Edit Product",
+        editing: editMode,
+        product: product,
+      };
+      res.render("admin/edit-product", payload);
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+};
 
 // exports.postEditProduct = (req, res, next) => {
 //   const productId = req.body.productId;
@@ -51,14 +59,20 @@ exports.postAddProduct = (req, res, next) => {
 //   res.redirect("/admin/products");
 // };
 
-// exports.getAdminProducts = (req, res, next) => {
-//   const payload = {
-//     path: "/admin/products",
-//     pageTitle: "Admin Products",
-//     prods: [],
-//   };
-//   res.render("admin/view-products", payload);
-// };
+exports.getAdminProducts = (req, res, next) => {
+  Product.fetchAll()
+    .then((products) => {
+      const payload = {
+        path: "/admin/products",
+        pageTitle: "Admin Products",
+        prods: products,
+      };
+      res.render("admin/view-products", payload);
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+};
 
 // exports.postDeleteProduct = (req, res, next) => {
 //   const productId = req.body.productId;

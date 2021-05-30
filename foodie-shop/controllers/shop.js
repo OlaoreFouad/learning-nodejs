@@ -26,14 +26,22 @@ exports.getProducts = (req, res, next) => {
     .catch((err) => console.error(err));
 };
 
-// exports.getProduct = (req, res, next) => {
-//     const payload = {
-//         pageTitle: 'Product',
-//         path: '/products',
-//         product: {}
-//     }
-//     res.render('shop/product-details', payload)
-// }
+exports.getProduct = (req, res, next) => {
+  const productId = req.params.productId;
+  Product.find(productId)
+    .then((product) => {
+      console.log(product);
+      const payload = {
+        pageTitle: "Product",
+        path: "/products",
+        product,
+      };
+      res.render("shop/product-details", payload);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
 
 // exports.getOrders = (req, res, next) => {
 //     const payload = {
