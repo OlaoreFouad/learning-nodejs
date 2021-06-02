@@ -1,4 +1,5 @@
 const Product = require("../models/product");
+const ObjectID = require("mongodb").ObjectID;
 
 exports.getAddProduct = (req, res, next) => {
   const payload = {
@@ -32,7 +33,7 @@ exports.getEditProduct = (req, res, next) => {
   const productId = req.params.productId;
   const editMode = req.query.edit;
 
-  console.log(`Getting here: ${ productId }, ${ editMode }`);
+  console.log(`Getting here: ${productId}, ${editMode}`);
 
   if (!editMode) {
     return res.redirect("/");
@@ -53,11 +54,24 @@ exports.getEditProduct = (req, res, next) => {
     });
 };
 
-// exports.postEditProduct = (req, res, next) => {
-//   const productId = req.body.productId;
+exports.postEditProduct = (req, res, next) => {
+  console.log(req.body.productId, typeof req.body.productId);
+  const product = new Product(
+    req.body.title,
+    req.body.description,
+    req.body.imageUrl,
+    req.body.price,
+    new ObjectID(req.body.productId)
+  );
+  product
+    .save()
+    .then((result) => {
+      console.log("Product Updated Successfully!");
+      res.redirect("/admin/products");
+    })
+    .catch((err) => console.error(err));
 
-//   res.redirect("/admin/products");
-// };
+};
 
 exports.getAdminProducts = (req, res, next) => {
   Product.fetchAll()
@@ -74,7 +88,13 @@ exports.getAdminProducts = (req, res, next) => {
     });
 };
 
-// exports.postDeleteProduct = (req, res, next) => {
-//   const productId = req.body.productId;
-//   res.redirect("/admin/products");
-// };
+exports.postDeleteProduct = (req, res, next) => {
+  const productId = req.body.productId;
+
+  Product.delete(productId)
+    .then(deleted => {
+      console.log("Product deleted successfully!");
+      res.redirect("/admin/products");
+    })
+    .catch(err => console.error(err))
+};
