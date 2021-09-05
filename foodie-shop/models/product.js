@@ -46,14 +46,17 @@ class Product {
     let dbOperation;
 
     if (this._id) {
-      dbOperation = db
-        .collection("products")
-        .updateOne({ _id: new ObjectID(this._id) }, { $set: {
-          title: this.title,
-          description: this.description,
-          price: this.price,
-          imageUrl: this.imageUrl,
-        } });
+      dbOperation = db.collection("products").updateOne(
+        { _id: new ObjectID(this._id) },
+        {
+          $set: {
+            title: this.title,
+            description: this.description,
+            price: this.price,
+            imageUrl: this.imageUrl,
+          },
+        }
+      );
     } else {
       dbOperation = db.collection("products").insertOne(this);
     }

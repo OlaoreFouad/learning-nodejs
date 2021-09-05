@@ -4,12 +4,12 @@ let _db;
 
 const connectToDatabase = (callback) => {
   MongoClient.connect(
-    "mongodb+srv://fouad:foodiepassword@cluster0.34k3l.mongodb.net/test"
+    "mongodb+srv://fouad:foodiepassword@foodiecluster.34k3l.mongodb.net/shop?retryWrites=true&w=majority?authSource=admin"
   )
     .then((client) => {
       console.log("Connected!");
       _db = client.db();
-      callback()
+      callback();
     })
     .catch((err) => {
       console.error(`Error occurred: ${err}`);
