@@ -3,12 +3,13 @@ const ObjectID = require("mongodb").ObjectID;
 const getDb = require("../utils/database").getDb;
 
 class Product {
-  constructor(title, description, imageUrl, price, id) {
+  constructor(title, description, imageUrl, price, id, userId) {
     this.title = title;
     this.description = description;
     this.imageUrl = imageUrl;
     this.price = Number(price);
     this._id = id;
+    this.userId = new ObjectID(userId);
   }
 
   static fetchAll() {
@@ -30,7 +31,6 @@ class Product {
 
   static find(id) {
     const db = getDb();
-    console.log(id);
     return db
       .collection("products")
       .find({ _id: new ObjectID(id) })

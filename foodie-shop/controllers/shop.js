@@ -62,6 +62,17 @@ exports.getProduct = (req, res, next) => {
 //     res.render('shop/cart', payload);
 // }
 
-// exports.postCart = (req, res, next) => {
-//     res.render('shop/cart');
-// }
+exports.postCart = (req, res, next) => {
+  const productId = req.body.productId;
+  Product.find(productId)
+    .then((product) => {
+      return req.user.addToCart(product);
+    })
+    .then((res) => {
+      console.log(res);
+      req.user.cart = res;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
