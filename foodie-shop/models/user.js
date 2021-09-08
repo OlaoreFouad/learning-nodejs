@@ -50,6 +50,17 @@ class User {
     const db = getDb();
     return db.collection("users").findOne({ _id: new ObjectID(userId) });
   }
+
+  getCart() {
+    const db = getDb();
+    return db
+      .collection("users")
+      .findOne({ _id: new ObjectID(this.userId) })
+      .then((user) => {
+        this.cart = user.cart;
+        return user.cart;
+      });
+  }
 }
 
 module.exports = User;

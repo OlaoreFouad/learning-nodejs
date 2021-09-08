@@ -13,7 +13,7 @@
                 <% products.forEach(product => { %> 
                     <div class="cart-item">
                         <span class="title"><%= product.title %></span>
-                        <span class="quantity">Quantity: <%= product.qty %></span>
+                        <span class="quantity">Quantity: <%= product.quantity %></span>
                         <form action="/cart/delete/<%= product._id %>" method="POST" style="display: inline;">
                             <button class="btn-delete">Delete</button>
                         </form>
