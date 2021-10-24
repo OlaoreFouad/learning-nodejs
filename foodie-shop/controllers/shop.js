@@ -58,20 +58,14 @@ exports.getCart = (req, res, next) => {
 
   req.user
     .getCart()
-    .then((_cart) => {
-      cart = _cart;
-      return Promise.all(
-        _cart.items.map((product) => Product.find(product.productId))
-      );
-    })
     .then((products) => {
       return products.map((product) => {
-        let itemInCartIndex = cart.items.findIndex((prod) => {
-          return prod.productId.toString() == product._id.toString();
+        let itemInCartIndex = products.findIndex((prod) => {
+          return prod.productId.toString() == product.productId.toString();
         });
         return {
           ...product,
-          quantity: cart.items[itemInCartIndex].quantity,
+          quantity: products[itemInCartIndex].quantity,
         };
       });
     })
@@ -99,4 +93,41 @@ exports.postCart = (req, res, next) => {
     .catch((err) => {
       console.log(err);
     });
+};
+
+exports.postDeleteCartProduct = (req, res, next) => {
+  const prodId = req.params.productId;
+  req.user
+    .deleteItemFromCart(prodId)
+    .then((_) => {
+      console.log("Cart item deleted successfully!");
+      res.redirect("/cart");
+    })
+    .catch((err) => console.error(err));
+};
+
+exports.postCheckout = (req, res, next) => {
+  req.user
+    .checkout()
+    .then((_) => {
+      console.log("Order created successfully!");
+      res.redirect("/orders");
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+};
+
+exports.getOrders = (req, res, next) => {
+  req.user
+    .getOrders()
+    .then((orders) => {
+      const payload = {
+        path: "/orders",
+        pageTitle: "Orders",
+        orders,
+      };
+      res.render("shop/orders", payload);
+    })
+    .catch((error) => console.error(error));
 };

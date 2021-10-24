@@ -7,6 +7,10 @@ exports.getPageNotFound = (req, res, next) => {
 };
 
 exports.sum = (prices) => {
+  if (prices.length == 0) {
+    return 0;
+  }
+
   return prices.reduce((prev, acc) => {
     return prev + acc;
   });

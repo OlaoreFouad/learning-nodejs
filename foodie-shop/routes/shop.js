@@ -15,4 +15,13 @@ shopRoutes.get("/cart", shopController.getCart);
 
 shopRoutes.post("/cart", shopController.postCart);
 
+shopRoutes.post(
+  "/cart/delete/:productId",
+  shopController.postDeleteCartProduct
+);
+
+shopRoutes.post("/checkout", shopController.postCheckout);
+
+shopRoutes.get("/orders", shopController.getOrders);
+
 module.exports = shopRoutes;
