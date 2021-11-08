@@ -7,7 +7,7 @@ shopRoutes.get("/", shopController.getShop);
 
 shopRoutes.get("/products", shopController.getProducts);
 
-// shopRoutes.get("/products/:productId", shopController.getProduct);
+shopRoutes.get("/products/:productId", shopController.getProduct);
 
 // // shopRoutes.get('/orders', shopController.getOrders)
 
