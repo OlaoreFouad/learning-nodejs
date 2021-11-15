@@ -54,47 +54,39 @@ exports.getProduct = (req, res, next) => {
 //     res.render('shop/orders', payload);
 // }
 
-// exports.getCart = (req, res, next) => {
-//   let cart = {};
+exports.getCart = (req, res, next) => {
+  req.user
+    .populate("cart.items.productId")
+    .execPopulate()
+    .then((products) => {
+      console.log(products);
+      return products;
+    })
+    .then((products) => {
+      const payload = {
+        pageTitle: "Cart",
+        path: "/cart",
+        products,
+        totalPrice: sum(products.map((p) => p.price * p.quantity)),
+      };
+      res.render("shop/cart", payload);
+    });
+};
 
-//   req.user
-//     .getCart()
-//     .then((products) => {
-//       return products.map((product) => {
-//         let itemInCartIndex = products.findIndex((prod) => {
-//           return prod.productId.toString() == product.productId.toString();
-//         });
-//         return {
-//           ...product,
-//           quantity: products[itemInCartIndex].quantity,
-//         };
-//       });
-//     })
-//     .then((products) => {
-//       const payload = {
-//         pageTitle: "Cart",
-//         path: "/cart",
-//         products,
-//         totalPrice: sum(products.map((p) => p.price * p.quantity)),
-//       };
-//       res.render("shop/cart", payload);
-//     });
-// };
-
-// exports.postCart = (req, res, next) => {
-//   const productId = req.body.productId;
-//   Product.find(productId)
-//     .then((product) => {
-//       return req.user.addToCart(product);
-//     })
-//     .then((cart) => {
-//       req.user.cart = cart;
-//       res.redirect("/products");
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//     });
-// };
+exports.postCart = (req, res, next) => {
+  const productId = req.body.productId;
+  Product.findById(productId)
+    .then((product) => {
+      return req.user.addToCart(product);
+    })
+    .then((cart) => {
+      req.user.cart = cart;
+      res.redirect("/products");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
 
 // exports.postDeleteCartProduct = (req, res, next) => {
 //   const prodId = req.params.productId;

@@ -11,9 +11,9 @@ shopRoutes.get("/products/:productId", shopController.getProduct);
 
 // // shopRoutes.get('/orders', shopController.getOrders)
 
-// shopRoutes.get("/cart", shopController.getCart);
+shopRoutes.get("/cart", shopController.getCart);
 
-// shopRoutes.post("/cart", shopController.postCart);
+shopRoutes.post("/cart", shopController.postCart);
 
 // shopRoutes.post(
 //   "/cart/delete/:productId",
