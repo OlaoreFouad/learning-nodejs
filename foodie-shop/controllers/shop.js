@@ -55,19 +55,21 @@ exports.getProduct = (req, res, next) => {
 // }
 
 exports.getCart = (req, res, next) => {
+  console.log(typeof req.user);
   req.user
     .populate("cart.items.productId")
-    .execPopulate()
     .then((products) => {
       console.log(products);
       return products;
     })
     .then((products) => {
+      const cartItems = products.cart.items;
+      console.log(cartItems);
       const payload = {
         pageTitle: "Cart",
         path: "/cart",
-        products,
-        totalPrice: sum(products.map((p) => p.price * p.quantity)),
+        products: cartItems,
+        totalPrice: sum(cartItems.map((p) => p.productId.price * p.quantity)),
       };
       res.render("shop/cart", payload);
     });
@@ -88,16 +90,16 @@ exports.postCart = (req, res, next) => {
     });
 };
 
-// exports.postDeleteCartProduct = (req, res, next) => {
-//   const prodId = req.params.productId;
-//   req.user
-//     .deleteItemFromCart(prodId)
-//     .then((_) => {
-//       console.log("Cart item deleted successfully!");
-//       res.redirect("/cart");
-//     })
-//     .catch((err) => console.error(err));
-// };
+exports.postDeleteCartProduct = (req, res, next) => {
+  const prodId = req.body.productId;
+  req.user
+    .removeFromCart(prodId)
+    .then((_) => {
+      console.log("Cart item deleted successfully!");
+      res.redirect("/cart");
+    })
+    .catch((err) => console.error(err));
+};
 
 // exports.postCheckout = (req, res, next) => {
 //   req.user
