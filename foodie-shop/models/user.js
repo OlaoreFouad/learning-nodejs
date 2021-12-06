@@ -54,8 +54,6 @@ userSchema.methods.removeFromCart = function (productId) {
     return item.productId.toString() !== productId.toString();
   });
 
-  console.log(updatedCartItems, productId);
-
   this.cart.items = updatedCartItems;
   return this.save();
 };

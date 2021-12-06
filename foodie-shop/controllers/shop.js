@@ -1,4 +1,5 @@
 const Product = require("../models/product");
+const Order = require("../models/order");
 const { sum } = require("./utils");
 
 exports.getShop = (req, res, next) => {
@@ -55,7 +56,6 @@ exports.getProduct = (req, res, next) => {
 // }
 
 exports.getCart = (req, res, next) => {
-  console.log(typeof req.user);
   req.user
     .populate("cart.items.productId")
     .then((products) => {
@@ -64,7 +64,6 @@ exports.getCart = (req, res, next) => {
     })
     .then((products) => {
       const cartItems = products.cart.items;
-      console.log(cartItems);
       const payload = {
         pageTitle: "Cart",
         path: "/cart",
@@ -101,28 +100,43 @@ exports.postDeleteCartProduct = (req, res, next) => {
     .catch((err) => console.error(err));
 };
 
-// exports.postCheckout = (req, res, next) => {
-//   req.user
-//     .checkout()
-//     .then((_) => {
-//       console.log("Order created successfully!");
-//       res.redirect("/orders");
-//     })
-//     .catch((err) => {
-//       console.error(err);
-//     });
-// };
+exports.postCheckout = (req, res, next) => {
+  req.user
+    .populate("cart.items.productId")
+    .then((products) => {
+      const prods = products.cart.items;
+      const order = new Order({
+        user: {
+          name: req.user.name,
+          userId: req.user,
+        },
+        products: prods.map((p) => {
+          return { quantity: p.quantity, product: { ...p.productId._doc } };
+        }),
+      });
+      return order.save();
+    })
+    .then((_) => {
+      console.log("Order created successfully!");
+      req.user.cart.items = [];
+      req.user.save();
+      res.redirect("/orders");
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+};
 
-// exports.getOrders = (req, res, next) => {
-//   req.user
-//     .getOrders()
-//     .then((orders) => {
-//       const payload = {
-//         path: "/orders",
-//         pageTitle: "Orders",
-//         orders,
-//       };
-//       res.render("shop/orders", payload);
-//     })
-//     .catch((error) => console.error(error));
-// };
+exports.getOrders = (req, res, next) => {
+  Order.find({ "user.userId": req.user._id })
+    .then((orders) => {
+      console.log(orders);
+      const payload = {
+        path: "/orders",
+        pageTitle: "Orders",
+        orders,
+      };
+      res.render("shop/orders", payload);
+    })
+    .catch((error) => console.error(error));
+};

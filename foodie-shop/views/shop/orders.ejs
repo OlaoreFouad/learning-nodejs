@@ -15,8 +15,8 @@
                 <div class="order">
                     <span class="order-title">Order #<%= index+1 %>: <%= order._id %></span>
                     <ul class="products">
-                    <% order.items.forEach(product => { %>
-                        <li class="product"> <%= product.title %> (<%= product.quantity %>) </li>
+                    <% order.products.forEach(product => { %>
+                        <li class="product"> <%= product.product.title %> (<%= product.quantity %>) </li>
                     <% }) %>
                 </ul>
                 </div>
