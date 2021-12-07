@@ -135,6 +135,13 @@ exports.getOrders = (req, res, next) => {
         path: "/orders",
         pageTitle: "Orders",
         orders,
+        totalPrices: orders.map((order) => {
+          return sum(
+            order.products.map((product) => {
+              return product.quantity * product.product.price;
+            })
+          );
+        }),
       };
       res.render("shop/orders", payload);
     })
