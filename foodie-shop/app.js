@@ -8,6 +8,8 @@ const utilsController = require("./controllers/utils");
 
 const shopRoutes = require("./routes/shop");
 const adminRoutes = require("./routes/admin");
+const authRoutes = require("./routes/auth");
+
 const User = require("./models/user");
 
 const app = express();
@@ -31,6 +33,7 @@ app.use((req, res, next) => {
     });
 });
 
+app.use(authRoutes);
 app.use(shopRoutes);
 app.use("/admin", adminRoutes);
 app.get("/", utilsController.getPageNotFound);
