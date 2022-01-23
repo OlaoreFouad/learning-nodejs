@@ -53,6 +53,7 @@ exports.getEditProduct = (req, res, next) => {
         pageTitle: "Edit Product",
         editing: editMode,
         product: product,
+        isLoggedIn: req.isLoggedIn,
       };
       res.render("admin/edit-product", payload);
     })
@@ -85,6 +86,7 @@ exports.getAdminProducts = (req, res, next) => {
         path: "/admin/products",
         pageTitle: "Admin Products",
         prods: products,
+        isLoggedIn: req.isLoggedIn,
       };
       res.render("admin/view-products", payload);
     })

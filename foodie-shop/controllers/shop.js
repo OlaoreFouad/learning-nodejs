@@ -10,6 +10,7 @@ exports.getShop = (req, res, next) => {
         pageTitle: "Shop",
         path: "/",
         prods: products,
+        isLoggedIn: req.isLoggedIn,
       };
       res.render("shop/index", payload);
     })
@@ -23,6 +24,7 @@ exports.getProducts = (req, res, next) => {
         pageTitle: "Products",
         path: "/products",
         prods: products,
+        isLoggedIn: req.isLoggedIn,
       };
       res.render("shop/product-list", payload);
     })
@@ -38,6 +40,7 @@ exports.getProduct = (req, res, next) => {
         pageTitle: "Product",
         path: "/products",
         product,
+        isLoggedIn: req.isLoggedIn,
       };
       res.render("shop/product-details", payload);
     })
@@ -68,6 +71,7 @@ exports.getCart = (req, res, next) => {
         pageTitle: "Cart",
         path: "/cart",
         products: cartItems,
+        isLoggedIn: req.isLoggedIn,
         totalPrice: sum(cartItems.map((p) => p.productId.price * p.quantity)),
       };
       res.render("shop/cart", payload);
@@ -142,6 +146,7 @@ exports.getOrders = (req, res, next) => {
             })
           );
         }),
+        isLoggedIn: req.isLoggedIn,
       };
       res.render("shop/orders", payload);
     })
