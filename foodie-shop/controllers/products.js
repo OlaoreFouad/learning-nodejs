@@ -8,6 +8,7 @@ exports.getAddProduct = (req, res, next) => {
     activeAddProduct: true,
     productCss: true,
     editing: false,
+    isLoggedIn: req.session.isLoggedIn,
   };
   res.render("admin/edit-product", payload);
 };
@@ -23,7 +24,7 @@ exports.postAddProduct = (req, res, next) => {
     description,
     price,
     imageUrl,
-    userId: req.user,
+    userId: req.session.user,
   });
   product
     .save()
@@ -53,7 +54,7 @@ exports.getEditProduct = (req, res, next) => {
         pageTitle: "Edit Product",
         editing: editMode,
         product: product,
-        isLoggedIn: req.isLoggedIn,
+        isLoggedIn: req.session.isLoggedIn,
       };
       res.render("admin/edit-product", payload);
     })
@@ -86,7 +87,7 @@ exports.getAdminProducts = (req, res, next) => {
         path: "/admin/products",
         pageTitle: "Admin Products",
         prods: products,
-        isLoggedIn: req.isLoggedIn,
+        isLoggedIn: req.session.isLoggedIn,
       };
       res.render("admin/view-products", payload);
     })
